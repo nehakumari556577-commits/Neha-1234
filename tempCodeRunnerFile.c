@@ -1,0 +1,1 @@
+  if(cancelseats > 0 && available_seats + cancelseats <= total_seats)
