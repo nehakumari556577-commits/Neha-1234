@@ -2,6 +2,14 @@
 #include<string.h>
 #include<ctype.h>
 
+    #define RED     "\033[1;31m"
+    #define GREEN   "\033[1;32m"
+    #define YELLOW  "\033[1;33m"
+    #define BLUE    "\033[1;34m"
+    #define CYAN    "\033[1;36m"
+    #define RESET   "\033[0m"
+
+
     char Username[20]="nehakumari";
     char Password[20]="neha@2007";
     char emailid[30];
@@ -9,17 +17,17 @@
 
 
     int busNumber[3]={101,102,103};
-    int seats=0;
-    int currentbus=-1;
     int booked_seats[3]={0,0,0};
     int available_seats[3]={50,50,50};
-    int total_seats=50;
-
+    int total_seats[3]={50,50,50};
     float fare[3]={500,650,900};
-    float total_fare;
+    float total_fare=0;
 
     char sourceCity[3][30]={"delhi","delhi","delhi"};
     char destinationCity[3][30]={"bihar","patna","kolkata"};
+
+    int seats=0;
+    int currentbus=-1;
 
     void signup();
     void login();
@@ -34,7 +42,7 @@
     int main()
     {
         int choice;
-        printf("\033[1;34m*********BUS RESEVATION SYSTEM**********\n");
+        printf(BLUE"*********BUS RESEVATION SYSTEM**********\n"RESET);
         printf("1. sign up\n");     
         printf("2. login\n");
         printf("3. exit\n");
@@ -62,7 +70,7 @@
 void signup()
 
 {
-    printf("\n\033[1;36m=====USER REGISTRATION=====\n");
+    printf(YELLOW"\n=====USER REGISTRATION=====\n"RESET);
     
     while(1)
     {
@@ -144,7 +152,7 @@ void signup()
                 }
                 
         }
-                printf("\nregistration successful! please login.\n");
+                printf(GREEN"\nregistration successful! please login.\n"RESET);
                 login();
              
 }   
@@ -152,7 +160,8 @@ void signup()
     void login()
     {
         while(1)
-        {  char inputuser[20];
+        {
+            char inputuser[20];
             char inputpass[20];
 
             printf("\n\033[1;31m******login******\n");
@@ -166,14 +175,15 @@ void signup()
 
             {
 
-                printf("\nlogin successful! welcome,%s\n",Username);
+                printf(GREEN"\nlogin successful! welcome,%s\n"RESET, Username);
                 menu();
+                return;
             }
             
             else
             {
 
-            printf("invalid Username or password!\n");
+            printf(RED"invalid Username or password!\n"RESET);
             }
         }
     }
@@ -183,7 +193,7 @@ void signup()
         int choice;
         do
         {
-            printf("\n\033[1;32m====USER MENU====\n");
+            printf(YELLOW"\n====USER MENU====\n"RESET);
             printf("1. book a ticket\n");
             printf("2. cancel a ticket\n");
             printf("3. check bus status\n");
@@ -207,17 +217,17 @@ void signup()
                 printf("logout Successful!\n");
                 break;
                 default:
-                printf("invalid choice!\n");
+                printf(RED"invalid choice!\n"RESET);
             }
         } while(choice!=4);
     }
     void selectbus()
     {
     
-            printf("\n\033[1;33mavailable bus:\n");
+            printf(CYAN"\navailable buses:\n"RESET);
             for(int i=0;i<3;i++)
             {
-                printf("%d:%s to %s | fare:%.2f | seats:%d\n",busNumber[i],sourceCity[i],destinationCity[i],fare[i],available_seats[i]);
+                printf("%d: %s to %s | fare:%.2f | seats:%d\n",busNumber[i],sourceCity[i],destinationCity[i],fare[i],available_seats[i]);
             }
 
             int bn;
@@ -278,12 +288,12 @@ void signup()
             available_seats[currentbus]-=seats;
             booked_seats[currentbus]+=seats;
 
-            printf("payment successful!\nticket booked successfully!\n");
+            printf(GREEN"payment successful!\nticket booked successfully!\n"RESET);
         
         }
         else
         {
-            printf("payment cancelled!\n");
+            printf(RED"payment cancelled!\n"RESET);
         }
     
     }
@@ -318,11 +328,11 @@ void signup()
             return;
         }
 
-        printf("\n\033[1;34m=======BUS STATUS=======\n");
+        printf(BLUE"\n=======BUS STATUS=======\n"RESET);
         printf("bus number:         %d\n",busNumber[currentbus]);
         printf("sourceCity:         %s\n",sourceCity[currentbus]);
         printf("destination City:   %s\n",destinationCity[currentbus]);
-        printf("total seat:         %d\n",total_seats);
+        printf("total seat:         %d\n",total_seats[currentbus]);
         printf("available seats:    %d\n",available_seats[currentbus]);
         printf("booked seats:       %d\n",booked_seats[currentbus]);
         printf("fare:               %.2f\n",fare[currentbus]);
